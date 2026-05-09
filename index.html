@@ -254,8 +254,10 @@ footer{background:var(--sft);border-top:1px solid var(--brd);padding:48px 40px;d
     <p class="sub">Roofing contractors, power wash companies, gutter companies, and exterior service operators are all eligible. One-time setup. Start selling.</p>
     <div class="fbox">
       <form
+        id="partnerForm"
         name="partner-application"
         method="POST"
+        action="/"
         data-netlify="true"
         netlify-honeypot="bot-field"
       >
@@ -284,6 +286,10 @@ footer{background:var(--sft);border-top:1px solid var(--brd);padding:48px 40px;d
         <button type="submit" class="btn btr" style="margin-top:28px;font-size:17px;padding:18px 40px">Submit Partner Application &rarr;</button>
         <p class="fnote">Applications go directly to Peak Pros USA at info@peakprosusa.com. We will be in touch within 1 business day.</p>
       </form>
+      <div id="partnerSuccess" style="display:none;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:4px;padding:32px;text-align:center;margin-top:8px">
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;color:#22c55e;margin-bottom:8px">&#10003; Application Submitted</h3>
+        <p style="font-size:15px;color:rgba(247,247,248,.65)">Thanks &mdash; your application has been routed to Peak Pros USA at info@peakprosusa.com.<br>Expect a reply within 1 business day.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -301,6 +307,43 @@ footer{background:var(--sft);border-top:1px solid var(--brd);padding:48px 40px;d
   </div>
   <p class="fc">&copy; 2026 Peak Pros AZ &mdash; Powered by Peak 301&reg; by Colorbiotics. A Peak Pros USA Platform. All rights reserved.</p>
 </footer>
+
+<script>
+// Partner application form: explicit fetch POST to "/" so Netlify Forms always
+// receives a urlencoded body bound to the registered "partner-application" form,
+// regardless of how the page URL was resolved (/, /index.html, trailing slash, etc.).
+(function(){
+  var form = document.getElementById('partnerForm');
+  var success = document.getElementById('partnerSuccess');
+  if(!form) return;
+  var btn = form.querySelector('button[type="submit"]');
+  var origLabel = btn ? btn.innerHTML : '';
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(btn){ btn.disabled = true; btn.innerHTML = 'Submitting&hellip;'; }
+    var data = new FormData(form);
+    // Netlify expects the form-name field as part of the body
+    if(!data.has('form-name')) data.append('form-name', 'partner-application');
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    })
+    .then(function(res){
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      form.style.display = 'none';
+      if(success){
+        success.style.display = 'block';
+        success.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    })
+    .catch(function(err){
+      if(btn){ btn.disabled = false; btn.innerHTML = origLabel; }
+      alert('Sorry, something went wrong submitting your application. Please email info@peakprosusa.com directly. (' + err.message + ')');
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
