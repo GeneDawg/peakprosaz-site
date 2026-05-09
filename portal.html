@@ -72,11 +72,17 @@ footer{background:var(--sft);border-top:1px solid var(--brd);padding:32px 40px;t
 
 <div class="wrap">
   <div class="fbox">
-    <form action="https://formsubmit.co/assignment@peakprosusa.com" method="POST" id="assignForm">
-      <input type="hidden" name="_subject" value="NEW Job Assignment — Peak Pros Houston Portal">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="text" name="_honey" style="display:none">
+    <form
+      id="assignForm"
+      name="job-assignment"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="job-assignment" />
+      <p hidden>
+        <label>Don&rsquo;t fill this out: <input name="bot-field" /></label>
+      </p>
 
       <!-- CONTRACTOR INFO -->
       <div class="section-title">&#128101; Your Information</div>
