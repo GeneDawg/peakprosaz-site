@@ -253,11 +253,16 @@ footer{background:var(--sft);border-top:1px solid var(--brd);padding:48px 40px;d
     <h2>Become a Peak Pros Houston Partner</h2>
     <p class="sub">Roofing contractors, power wash companies, gutter companies, and exterior service operators are all eligible. One-time setup. Start selling.</p>
     <div class="fbox">
-      <form action="https://formsubmit.co/assignment@peakprosusa.com" method="POST">
-        <input type="hidden" name="_subject" value="New Peak Pros Houston Partner Application">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="_honey" style="display:none">
+      <form
+        name="partner-application"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="partner-application" />
+        <p hidden>
+          <label>Don&rsquo;t fill this out: <input name="bot-field" /></label>
+        </p>
         <div class="fgrid">
           <div class="fg"><label>Company Name *</label><input type="text" name="Company_Name" placeholder="Your Company LLC" required></div>
           <div class="fg"><label>Primary Contact *</label><input type="text" name="Contact_Name" placeholder="First Last" required></div>
