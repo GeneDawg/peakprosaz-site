@@ -12,11 +12,8 @@ Live site: [peakprosaz.com](https://peakprosaz.com)
 
 ## Pricing model
 
-- Contractor fulfillment cost: **$85 / square** (paid by partner to Peak Pros AZ)
-- Suggested retail to homeowner: **$120–$130 / square** (avg $125)
-- Contractor spread: **$40 / square** ($125 − $85)
-- Standard 25-square roof: contractor pays $2,125, charges $3,125, keeps **$1,000 gross profit**
-- 4–8 jobs/month per active partner = $4,000–$8,000 monthly gross
+- Contractor fulfillment cost: see internal partner rate sheet (not published)
+- Retail pricing: set by each partner
 
 ## Portal authentication
 
