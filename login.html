@@ -305,7 +305,7 @@
     document.getElementById('portal').style.display = 'block';
     document.getElementById('partner-token').value = s.token;
     const acct = (s.accounts || [])[0];
-    const name = s.role === 'admin' ? 'GDRR admin' : (acct ? acct.name : 'partner');
+    const name = s.role === 'admin' ? 'Peak Pros AZ admin' : (acct ? acct.name : 'partner');
     document.getElementById('signed-in-name').textContent = name;
     const company = document.querySelector('input[name="company"]');
     if (s.role === 'partner' && acct && company) { company.value = acct.name; company.readOnly = true; company.style.opacity = '.8'; }

@@ -2,10 +2,10 @@ import { accounts, sessionFromToken } from "../lib/portal.mts";
 import { createFromAssignment } from "../lib/intake.mts";
 
 // Runs automatically every time a Netlify form on this site is submitted (Netlify signs these events).
-// Only the contractor assignment form creates JobNimbus records.
+// Only the contractor assignment form creates jobs in the AZ job tracker.
 // The form carries the partner's signed-in session (partner_token). A valid partner session decides which
 // contractor the job belongs to. Without one, the job is still created so no lead is lost, but it is marked
-// "CHECK -" and left unattached for Shadie to confirm.
+// saved as "unassigned" for Peak Pros AZ to review.
 export default async (req: Request) => {
   const body = await req.json().catch(() => null);
   const p = body?.payload;
@@ -21,11 +21,11 @@ export default async (req: Request) => {
       const account = accounts().find((a) => a.key === session.key) || null;
       result = await createFromAssignment(data, { account });
     } else if (session?.role === "admin") {
-      result = await createFromAssignment(data); // GDRR staff entering a job: match by company/email
+      result = await createFromAssignment(data); // Peak Pros AZ staff entering a job: match by company/email
     } else {
       result = await createFromAssignment(data, { unverified: true });
     }
-    console.log("assignment created in JobNimbus", JSON.stringify({ ...result, verified: !!session }));
+    console.log("assignment saved", JSON.stringify({ ...result, verified: !!session }));
     return new Response("ok");
   } catch (e) {
     console.error("assignment intake failed", e);

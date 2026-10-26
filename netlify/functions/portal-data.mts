@@ -1,13 +1,13 @@
 import type { Config } from "@netlify/functions";
-import { allowedAccounts, handleError, json, loadJobs, readSession } from "../lib/portal.mts";
+import { allowedAccounts, handleError, json, readSession } from "../lib/portal.mts";
+import { allJobs, toPortalJob, visibleJobs } from "../lib/jobs.mts";
 
-// GET ?account=<key|all> -> the jobs, invoices and warranty status this session may see.
+// GET -> the jobs this session may see. Contractors see only their own; admin sees everything.
 export default async (req: Request) => {
   try {
     const session = readSession(req);
-    const requested = new URL(req.url).searchParams.get("account");
-    const accts = allowedAccounts(session, requested);
-    const { jobs } = await loadJobs(accts, true);
+    const accts = allowedAccounts(session, "all");
+    const jobs = visibleJobs(await allJobs(), session, accts).map(toPortalJob);
     return json({ updated: new Date().toISOString(), jobs });
   } catch (e) {
     return handleError(e);
