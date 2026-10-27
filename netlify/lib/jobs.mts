@@ -73,7 +73,7 @@ export function toPortalJob(r: JobRecord) {
 }
 
 export function visibleJobs(rows: JobRecord[], s: Session, accts: Account[]) {
-  if (s.role === "admin") return rows;
+  if (s.role !== "partner") return rows;
   const keys = new Set(accts.map((a) => a.key));
   return rows.filter((r) => keys.has(r.account));
 }

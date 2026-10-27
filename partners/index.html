@@ -409,7 +409,7 @@ setInterval(() => {
 const sel = $("partner");
 function startApp(){
   $("gate").hidden = true; $("app").hidden = false; window.scrollTo(0,0);
-  const admin = session.role === "admin";
+  const admin = session.role !== "partner";
   $("adminbadge").hidden = !admin; $("switchwrap").hidden = !admin;
   if (admin){
     sel.innerHTML = '<option value="all">All contractors</option>' + session.accounts.map(a=>`<option value="${esc(a.key)}">${esc(a.name)} (${esc(a.prefix)})</option>`).join("");
@@ -458,7 +458,7 @@ function render(){
   const all = current === "all";
   const a = all ? null : acct(current);
   $("pname").textContent = all ? "All Contractors" : a.name;
-  $("who").textContent = session.role === "admin" ? "Peak Pros AZ Admin" : (session.accounts[0].contact || session.accounts[0].name);
+  $("who").textContent = session.role === "viewer" ? "National (view only)" : session.role === "admin" ? "Peak Pros AZ Admin" : (session.accounts[0].contact || session.accounts[0].name);
   $("acct").textContent = all ? `${session.accounts.length} referral partners` : `Account code ${a.prefix}`;
   $("h-partner").hidden = !all;
   const js = all ? jobs : jobs.filter(j=>j.account===current);
