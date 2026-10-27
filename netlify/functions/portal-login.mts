@@ -2,7 +2,7 @@ import type { Config, Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { accounts, handleError, HttpError, json, makeToken, matchCode, publicAccount } from "../lib/portal.mts";
 
-// POST { code } -> a signed session for that contractor (or GDRR admin).
+// POST { code } -> a signed session for that contractor (or Peak 301 Pros admin).
 // Guessing is slowed (0.8 s per wrong code) and capped: 8 wrong codes from one address in 15 minutes
 // locks that address out for 15 minutes.
 const MAX_FAILS = 8;
