@@ -1,3 +1,4 @@
 User-agent: *
+Disallow: /partners/
 Disallow: /login.html
-Disallow: /portal.html
+Disallow: /api/
